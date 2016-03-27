@@ -1,17 +1,14 @@
 package frame.clean.org.cleanframe.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import javax.inject.Inject;
 
 import frame.clean.org.cleanframe.R;
 import frame.clean.org.cleanframe.model.ApplicationComponent;
 import frame.clean.org.cleanframe.model.DaggerPresenterComponent;
-import frame.clean.org.cleanframe.model.PresenterModule;
+import frame.clean.org.cleanframe.model.entry.User;
 import frame.clean.org.cleanframe.presenter.LogonPresenter;
 
 public class LogonActivity extends BaseActivity implements LogonPresenter.LogonView{
@@ -37,12 +34,13 @@ public class LogonActivity extends BaseActivity implements LogonPresenter.LogonV
 
         presenter.attach(this);
         presenter.talk();
+
     }
 
     @Override
     protected void setupActivityComponent(ApplicationComponent appComponent) {
 
-        DaggerPresenterComponent.builder().applicationComponent(appComponent).presenterModule(new PresenterModule()).build().inject(this);
+        DaggerPresenterComponent.builder().applicationComponent(appComponent).build().inject(this);
     }
 
     @Override
@@ -52,6 +50,16 @@ public class LogonActivity extends BaseActivity implements LogonPresenter.LogonV
 
     @Override
     public void hideProgress() {
+
+    }
+
+    @Override
+    public void logonSuccess(User user) {
+
+    }
+
+    @Override
+    public void logonFailure(Throwable e) {
 
     }
 }

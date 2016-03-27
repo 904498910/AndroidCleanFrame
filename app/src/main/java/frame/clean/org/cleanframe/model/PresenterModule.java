@@ -12,6 +12,7 @@ import frame.clean.org.cleanframe.presenter.LogonPresenter;
 @Module
 public class PresenterModule {
 
+    @PerActivity
     @Provides
     LogonPresenter logonPresenter(){
         return new LogonPresenter();

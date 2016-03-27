@@ -12,7 +12,7 @@ import frame.clean.org.cleanframe.model.DaggerApplicationComponent;
  */
 public class MVPApplication extends Application {
 
-    private ApplicationComponent applicationComponent;
+    private static ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -21,7 +21,7 @@ public class MVPApplication extends Application {
         this.applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).apiServiceModule(new ApiServiceModule("")).build();
     }
 
-    public ApplicationComponent getApplicationComponent() {
+    public static ApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }
 }

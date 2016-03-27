@@ -1,5 +1,6 @@
 package frame.clean.org.cleanframe.model;
 
+import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.util.concurrent.TimeUnit;
@@ -10,6 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+import retrofit.converter.GsonConverter;
 
 /**
  * Created by Administrator on 2016/3/2.
@@ -39,6 +41,7 @@ public class ApiServiceModule {
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setClient(new OkClient(okHttpClient))
                 .setEndpoint(END_POINT);
+        builder.setConverter(new GsonConverter(new Gson()));
         return builder.build();
     }
 
