@@ -1,17 +1,14 @@
 package frame.clean.org.cleanframe.model;
 
-import com.google.gson.Gson;
-import com.squareup.okhttp.OkHttpClient;
-
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
-import retrofit.converter.GsonConverter;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Administrator on 2016/3/2.
@@ -21,33 +18,32 @@ public class ApiServiceModule {
 
     private final String END_POINT;
 
-    public ApiServiceModule(String domain)
-    {
+    public ApiServiceModule(String domain) {
         this.END_POINT = domain;
     }
 
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setConnectTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-        okHttpClient.setReadTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-        return okHttpClient;
-    }
-
-    @Provides
-    @Singleton
-    RestAdapter provideRestAdapter(OkHttpClient okHttpClient) {
-        RestAdapter.Builder builder = new RestAdapter.Builder();
-        builder.setClient(new OkClient(okHttpClient))
-                .setEndpoint(END_POINT);
-        builder.setConverter(new GsonConverter(new Gson()));
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+        builder.readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
         return builder.build();
     }
 
     @Provides
     @Singleton
-    ApiService provideApiService(RestAdapter restAdapter) {
-        return restAdapter.create(ApiService.class);
+    Retrofit provideRestAdapter(OkHttpClient okHttpClient) {
+        Retrofit.Builder builder = new Retrofit.Builder();
+        builder.baseUrl(END_POINT);
+        builder.client(new okhttp3.OkHttpClient());
+        builder.addConverterFactory(GsonConverterFactory.create());
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    ApiService provideApiService(Retrofit retrofit) {
+        return retrofit.create(ApiService.class);
     }
 }

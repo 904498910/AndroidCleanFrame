@@ -3,11 +3,15 @@ package frame.clean.org.cleanframe.presenter;
 import android.util.Log;
 
 import frame.clean.org.cleanframe.MVPApplication;
+import frame.clean.org.cleanframe.RetroUtil;
 import frame.clean.org.cleanframe.model.ApiService;
+import frame.clean.org.cleanframe.model.entry.Result;
 import frame.clean.org.cleanframe.model.entry.User;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -27,18 +31,21 @@ public class LogonPresenter {
         this.logonView = view;
     }
 
-    public void talk()
-    {
-        Log.d("tag","I am Coming!");
+    public void talk() {
+        Log.d("tag", "I am Coming!");
     }
 
-    public User logon(String useName,String pwd)
-    {
-        if(logonView != null)
-        {
+    public User logon(String useName, String pwd) {
+        if (logonView != null) {
             logonView.showProgress();
         }
-        apiService.getUserInfo(useName,pwd).observeOn(Schedulers.io()).doOnNext(new Action1<User>() {
+        apiService.getUserInfo(useName, pwd).flatMap(new Func1<Result<User>, Observable<User>>() {
+            @Override
+            public Observable<User> call(Result<User> userResult) {
+
+                return RetroUtil.flatResult(userResult);
+            }
+        }).observeOn(Schedulers.io()).doOnNext(new Action1<User>() {
             @Override
             public void call(User user) {
                 user.insert();
@@ -51,8 +58,7 @@ public class LogonPresenter {
 
             @Override
             public void onError(Throwable e) {
-                if(logonView != null)
-                {
+                if (logonView != null) {
                     logonView.logonFailure(e);
                     logonView.hideProgress();
                 }
@@ -60,8 +66,7 @@ public class LogonPresenter {
 
             @Override
             public void onNext(User user) {
-                if(logonView != null)
-                {
+                if (logonView != null) {
                     logonView.logonSuccess(user);
                     logonView.hideProgress();
                 }

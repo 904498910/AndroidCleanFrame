@@ -10,5 +10,5 @@ public class MVPDB {
 
     public static final int VERSION = 1;
 
-    public static final String  NAME = "mvp.db";
+    public static final String  NAME = "mvp";
 }
