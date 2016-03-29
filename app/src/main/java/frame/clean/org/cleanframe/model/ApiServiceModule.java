@@ -1,11 +1,10 @@
 package frame.clean.org.cleanframe.model;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import frame.clean.org.cleanframe.model.network.OkHttpUtil;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,10 +24,11 @@ public class ApiServiceModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-        builder.readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-        return builder.build();
+//        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//        builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+//        builder.readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+//        return builder.build();
+        return OkHttpUtil.getOkHttpClient();
     }
 
     @Provides
