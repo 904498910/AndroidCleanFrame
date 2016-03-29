@@ -21,7 +21,7 @@ public class MVPApplication extends Application {
         super.onCreate();
         FlowManager.init(this);
 
-        this.applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).apiServiceModule(new ApiServiceModule("")).build();
+        this.applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).apiServiceModule(new ApiServiceModule("http://sale.suning.com")).build();
     }
 
     public static ApplicationComponent getApplicationComponent() {

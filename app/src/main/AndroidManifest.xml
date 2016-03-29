@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="frame.clean.org.cleanframe">
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:name=".MVPApplication"
         android:allowBackup="true"

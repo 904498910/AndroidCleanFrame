@@ -37,7 +37,7 @@ public class ApiServiceModule {
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.baseUrl(END_POINT);
         builder.client(new okhttp3.OkHttpClient());
-        builder.addConverterFactory(GsonConverterFactory.create());
+//        builder.addConverterFactory(GsonConverterFactory.create());
         return builder.build();
     }
 
