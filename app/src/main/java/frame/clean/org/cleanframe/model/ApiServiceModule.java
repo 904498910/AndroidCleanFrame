@@ -7,6 +7,7 @@ import dagger.Provides;
 import frame.clean.org.cleanframe.model.network.OkHttpUtil;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -37,7 +38,8 @@ public class ApiServiceModule {
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.baseUrl(END_POINT);
         builder.client(new okhttp3.OkHttpClient());
-//        builder.addConverterFactory(GsonConverterFactory.create());
+        builder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+        builder.addConverterFactory(GsonConverterFactory.create());
         return builder.build();
     }
 

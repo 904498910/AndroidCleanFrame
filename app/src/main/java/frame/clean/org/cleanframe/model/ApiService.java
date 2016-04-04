@@ -3,7 +3,6 @@ package frame.clean.org.cleanframe.model;
 import frame.clean.org.cleanframe.model.entry.Result;
 import frame.clean.org.cleanframe.model.entry.User;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -15,6 +14,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/user")
     Observable<Result<User>> getUserInfo(@Field("name")String name,@Field("passwd")String pwd);
-    @GET("/syb/yinliuye0512/index.html")
-    Call<ResponseBody> getHtml();
+    @GET("http://www.sina.com.cn/")
+    Observable<ResponseBody> getHtml();
+
 }

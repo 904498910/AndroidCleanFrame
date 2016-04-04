@@ -15,7 +15,7 @@
             android:name="frame.clean.org.cleanframe.model.network.OkHttpGlideModule"
             android:value="GlideModule" />
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.LogonActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.LogonActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/title_activity_logon"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

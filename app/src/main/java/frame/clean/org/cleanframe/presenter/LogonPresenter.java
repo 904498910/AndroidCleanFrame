@@ -7,6 +7,10 @@ import frame.clean.org.cleanframe.RetroUtil;
 import frame.clean.org.cleanframe.model.ApiService;
 import frame.clean.org.cleanframe.model.entry.Result;
 import frame.clean.org.cleanframe.model.entry.User;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,6 +37,30 @@ public class LogonPresenter {
 
     public void talk() {
         Log.d("tag", "I am Coming!");
+        apiService.getHtml().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+
+                        Log.d("tag","onNext");
+                        try {
+                            Log.d("tag",responseBody.string());
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     public User logon(String useName, String pwd) {
